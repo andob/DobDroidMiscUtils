@@ -31,11 +31,10 @@ dependencies {
 10. [Color](#color)
 11. [RetrofitX](#retrofit)
 12. [JodaTimeX](#jodatimex)
-13. [CacheDelegate](#cache)
-14. [Yield](#yield)
-15. [CollectionX](#collection)
-16. [TypedArrayX](#typedarray)
-17. [StringJsonAdapter (Gson)](#stringjsonadapter)
+13. [Yield](#yield)
+14. [CollectionX](#collection)
+15. [TypedArrayX](#typedarray)
+16. [StringJsonAdapter (Gson)](#stringjsonadapter)
 17. [Library dependencies](#dependencies)
 
 #### ToolbarX <a name="toolbarx"></a>
@@ -357,21 +356,6 @@ val gson : Gson = GsonBuilder()
     .registerTypeAdapter(LocalTime::class.java, LocalTimeJsonAdapter("HH:mm"))
     .create()
 ```
-
-#### Cache delegate <a name="cache"></a>
-
-Use ``by cache()`` delegate to cache in memory values returned by other delegates. For instance, with kotpref library:
-
-```kotlin
-object Preferences : KotprefModel()
-{
-    var username by cached(stringPref())
-    var level by cached(intPref())
-    var firstRun by booleanPref(default = true)
-}
-```
-
-Username will be returned from memory cache. If not found in cache, it will be fetched by ``stringPref`` delegate, from ``SharedPreferences``.
 
 #### Yield expressions <a name="yield"></a>
 
