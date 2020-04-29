@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import androidx.annotation.MenuRes
 import androidx.appcompat.widget.Toolbar
 import com.balysv.materialmenu.MaterialMenu
 import com.balysv.materialmenu.MaterialMenuDrawable
@@ -11,7 +12,9 @@ import com.balysv.materialmenu.MaterialMenuDrawable
 class ToolbarXData
 {
     val menuItemClickListeners : MutableMap<Int, () -> (Unit)> = mutableMapOf()
-    var menu : Int = 0
+
+    @MenuRes
+    var menuResourceId : Int = 0
 }
 
 fun Toolbar.getData() : ToolbarXData
@@ -27,9 +30,9 @@ fun Toolbar.setupBackIcon()
     setNavigationOnClickListener { context.toActivity()!!.onBackPressed() }
 }
 
-fun Toolbar.setMenu(menu : Int)
+fun Toolbar.setMenu(menuResourceId : Int)
 {
-    getData().menu=menu
+    getData().menuResourceId=menuResourceId
 }
 
 operator fun Toolbar.set(menuItemId : Int, value: () -> (Unit)) =
@@ -55,17 +58,16 @@ fun Toolbar.onOptionsItemSelected(item : MenuItem?)
     }
 }
 
-fun Toolbar.onCreateOptionsMenu(menuInflater : MenuInflater, menuObj : Menu?)
+fun Toolbar.onCreateOptionsMenu(menuInflater : MenuInflater, menu : Menu?)
 {
-    val menu=getData().menu
-    if (menu!=0)
-        if (menuObj!=null)
-            menuInflater.inflate(menu, menuObj)
+    val menuResourceId=getData().menuResourceId
+    if (menuResourceId!=0&&menu!=null)
+        menuInflater.inflate(menuResourceId, menu)
 }
 
 fun Toolbar.onCreateOptionsMenuFromFragment()
 {
-    val menu=getData().menu
+    val menu=getData().menuResourceId
     if (menu!=0)
         inflateMenu(menu)
 }

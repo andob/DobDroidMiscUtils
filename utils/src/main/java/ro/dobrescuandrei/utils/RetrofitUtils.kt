@@ -4,22 +4,13 @@ import android.content.ContentResolver
 import android.content.Context
 import android.net.Uri
 import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.ResponseBody
-import okhttp3.internal.Util
-import okio.BufferedSink
-import okio.Okio
-import okio.Source
+import okio.*
 import java.io.File
-import java.io.IOException
-import java.io.InputStream
-import java.net.InetAddress
-import java.net.Proxy
-import java.net.Socket
-import java.net.SocketImpl
-import javax.net.SocketFactory
-
 
 object RequestBodyForContentUri
 {
@@ -29,49 +20,21 @@ object RequestBodyForContentUri
         {
             override fun contentType(): MediaType? = contentType
 
-            override fun contentLength(): Long
+            override fun contentLength() : Long
             {
-                var stream : InputStream? = null
-                try
-                {
-                    stream=contentResolver.openInputStream(Uri.parse(uri))
-                    return stream?.available()?.toLong()?:0
+                contentResolver.openInputStream(Uri.parse(uri))?.use { inputStream ->
+                    return inputStream.available().toLong()
                 }
-                catch (e : Exception)
-                {
-                    return 0
-                }
-                finally
-                {
-                    try
-                    {
-                        stream?.close()
-                    }
-                    catch (ex : Exception)
-                    {
-                    }
-                }
+
+                return 0
             }
 
-            override fun writeTo(sink: BufferedSink?)
+            override fun writeTo(output : BufferedSink)
             {
-                var source : Source? = null
-                try
-                {
-                    val stream=contentResolver.openInputStream(Uri.parse(uri))
-                    source=Okio.source(stream)
-                    sink?.writeAll(source)
-                }
-                catch (e : Exception)
-                {
-                }
-                finally
-                {
-                    if (source!=null)
-                        Util.closeQuietly(source)
+                contentResolver.openInputStream(Uri.parse(uri))?.source()?.buffer()?.use { input ->
+                    output.writeAll(input)
                 }
             }
-
         }
     }
 }
@@ -80,19 +43,22 @@ object RetrofitUtils
 {
     fun fileUpload(context : Context, fileKey : String = "image", path : String) : MultipartBody.Part
     {
-        val fileName = FileManager.removeInvalidCharactersFromFileName(path.split("/").last())
-        val contentType = MediaType.parse("multipart/form-data")
-        val requestFile : RequestBody = if (path.startsWith("content://"))
-            RequestBodyForContentUri.create(contentType, path, context.contentResolver)
-        else RequestBody.create(contentType, File(path))
-        return MultipartBody.Part.createFormData(fileKey, fileName, requestFile)
+        val fileName=path.split("/").last().replace("[\\\\/:*?\"<>|]".toRegex(), "")
+        val contentType="multipart/form-data".toMediaTypeOrNull()
+
+        val requestFileBody=
+            if (path.startsWith("content://"))
+                RequestBodyForContentUri.create(contentType, path, context.contentResolver)
+            else File(path).asRequestBody(contentType)
+
+        return MultipartBody.Part.createFormData(fileKey, fileName, requestFileBody)
     }
 
     @Throws(Exception::class)
     fun downloadFile(body : ResponseBody, outputPath : String)
     {
-        val sink = Okio.buffer(Okio.sink(File(outputPath)))
-        sink.writeAll(body.source())
-        sink.close()
+        File(outputPath).sink().buffer().use { output ->
+            output.writeAll(body.source())
+        }
     }
 }

@@ -13,7 +13,7 @@ allprojects {
 ```
 ```
 dependencies {
-    implementation 'com.github.andob:DobDroidMiscUtils:v1.2.1'
+    implementation 'com.github.andob:DobDroidMiscUtils:v1.2.3'
 }
 ```
 
@@ -27,15 +27,14 @@ dependencies {
 6. [ScreenSize](#screensize)
 7. [PermissionsHandler](#permissions)
 8. [Keyboard](#keyboard)
-9. [FileManager](#filemanager)
-10. [Color](#color)
-11. [RetrofitX](#retrofit)
-12. [JodaTimeX](#jodatimex)
-13. [Yield](#yield)
-14. [CollectionX](#collection)
-15. [TypedArrayX](#typedarray)
-16. [StringJsonAdapter (Gson)](#stringjsonadapter)
-17. [Library dependencies](#dependencies)
+9. [Color](#color)
+10. [RetrofitX](#retrofit)
+11. [JodaTimeX](#jodatimex)
+12. [Yield](#yield)
+13. [CollectionX](#collection)
+14. [TypedArrayX](#typedarray)
+15. [StringJsonAdapter (Gson)](#stringjsonadapter)
+16. [Library dependencies](#dependencies)
 
 #### ToolbarX <a name="toolbarx"></a>
 
@@ -217,20 +216,6 @@ Keyboard.close(on = context)
 ```kotlin
 editText.openKeyboard()
 ``` 
-
-#### FileManager <a name="filemanager"></a>
-
-Extend ``FileManager`` class to create classes that manages app file's paths. For instance, ``getSampleFilePath`` will return ``/storage/emulated/0/Dob/sample.pdf``
-
-```kotlin
-object AppFileManager : FileManager()
-{
-    override fun folderBasePath() : String = Environment.getExternalStorageDirectory().absolutePath
-    override fun folderName() : String = "Dob"
-
-    fun getSampleFilePath() : String = getFilePath("sample.pdf")
-}
-```
 
 #### Color <a name="color"></a>
 

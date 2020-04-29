@@ -2,7 +2,6 @@ package ro.dobrescuandrei.dobdroidmiscutils
 
 import android.Manifest
 import android.os.Bundle
-import android.os.Environment
 import android.os.Handler
 import android.util.Log
 import android.view.Menu
@@ -10,10 +9,6 @@ import android.view.MenuItem
 import android.view.inputmethod.EditorInfo
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import okhttp3.ResponseBody
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import ro.dobrescuandrei.utils.*
 import java.io.File
 
@@ -75,60 +70,6 @@ class MainActivity : AppCompatActivity()
             if (actionId==EditorInfo.IME_ACTION_DONE)
                 Log.e("a", "enter pressed")
         }
-
-//        val viewPager=ViewPager(this)
-//        viewPager.setOnPageChangedListener { page ->
-//            Log.e("a", "You're on page $page")
-//        }
-//
-//        val bottomNavigationView=BottomNavigationView(this)
-//        bottomNavigationView.setupWithViewPager(viewPager)
-//        bottomNavigationView.setupWithViewPager(viewPager, initialTab = 0)
-
-        ApiClient.Instance.downloadPdf().enqueue(object : Callback<ResponseBody>
-        {
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable)
-            {
-                Log.e("a", "fail")
-            }
-
-            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>)
-            {
-                Thread {
-                    try
-                    {
-                        RetrofitUtils.downloadFile(response.body()!!, outputPath = AppFileManager.getSampleFilePath())
-                        Log.e("a", "success")
-                    }
-                    catch (ex : Exception)
-                    {
-                        Log.e("a", "fail")
-                    }
-                }.start()
-            }
-        })
-
-        ApiClient.Instance.uploadPdf(RetrofitUtils.fileUpload(context = this,
-            path = AppFileManager.getSampleFilePath()))
-            .enqueue(object : Callback<Unit?>
-            {
-                override fun onFailure(call: Call<Unit?>, t: Throwable)
-                {
-                    Log.e("a", "fail")
-                }
-
-                override fun onResponse(call: Call<Unit?>, response: Response<Unit?>)
-                {
-                    Log.e("a", "success")
-                }
-            })
-
-        val files=findFilesIn(directory = File(Environment.getExternalStorageDirectory().absolutePath))
-        for (file in files) println(file)
-
-        val list=listOf(1, 2, 3, null, 3)
-        val set=list.mapToSet { it } //setOf(1,2,3)
-        println(set)
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray)
