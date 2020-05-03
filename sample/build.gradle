@@ -28,12 +28,11 @@ android {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.2.0-beta01'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'com.google.android.material:material:1.2.0-alpha06'
     implementation 'androidx.recyclerview:recyclerview:1.2.0-alpha02'
     implementation 'com.balysv.materialmenu:material-menu:2.0.0'
     implementation 'com.squareup.retrofit2:retrofit:2.7.1'
     implementation 'com.google.code.gson:gson:2.8.6'
-//    implementation 'com.github.andob:DobDroidMiscUtils:v1.1.1'
     implementation project(":utils")
 }

@@ -7,13 +7,13 @@
 ```
 allprojects {
     repositories {
-        maven { url 'https://jitpack.io' }
+        maven { url 'http://maven.andob.info/reporitory/open_source' }
     }
 }
 ```
 ```
 dependencies {
-    implementation 'com.github.andob:DobDroidMiscUtils:v1.2.3'
+    implementation 'ro.andob.dobdroid:miscutils:1.2.4'
 }
 ```
 
@@ -453,7 +453,7 @@ implementation 'com.google.code.gson:gson:2.8.5'
 You can exclude any of those:
 
 ```
-implementation ('com.github.andob:DobDroidMiscUtils:v1.1.7') {
+implementation ('ro.andob.dobdroid:miscutils:1.2.4') {
     exclude group: 'com.android.support'
     exclude group: 'com.balysv.materialmenu'
     exclude group: 'com.squareup.okhttp3'

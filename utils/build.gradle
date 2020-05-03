@@ -1,9 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'com.github.dcendents.android-maven'
-
-group='com.github.jitpack'
-version 'v1.0.0'
+apply plugin: 'digital.wup.android-maven-publish'
 
 android {
     compileSdkVersion 29
@@ -31,7 +28,7 @@ android {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.2.0-beta01'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'com.google.android.material:material:1.2.0-alpha06'
     implementation 'androidx.recyclerview:recyclerview:1.2.0-alpha02'
     implementation 'com.balysv.materialmenu:material-menu:2.0.0'
@@ -40,5 +37,26 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation ('com.github.debop:koda-time:2.0.0') {
         exclude group: 'joda-time'
+    }
+}
+
+publishing {
+    publications {
+        repositories.maven {
+            url 'http://maven.andob.info/repository/open_source/'
+            credentials {
+                username "$System.env.MAVEN_PUBLISH_USERNAME"
+                password "$System.env.MAVEN_PUBLISH_PASSWORD"
+            }
+        }
+
+        android.libraryVariants.all { variant ->
+            "maven${variant.name.capitalize()}Aar"(MavenPublication) {
+                from components.findByName("android${variant.name.capitalize()}")
+                groupId 'ro.andob.dobdroid'
+                artifactId 'miscutils'
+                version '1.2.4'
+            }
+        }
     }
 }
