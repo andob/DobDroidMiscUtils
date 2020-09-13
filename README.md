@@ -13,7 +13,7 @@ allprojects {
 ```
 ```
 dependencies {
-    implementation 'ro.andob.dobdroid:miscutils:1.2.4'
+    implementation 'ro.andob.dobdroid:miscutils:1.2.5'
 }
 ```
 
@@ -34,7 +34,6 @@ dependencies {
 13. [CollectionX](#collection)
 14. [TypedArrayX](#typedarray)
 15. [StringJsonAdapter (Gson)](#stringjsonadapter)
-16. [Library dependencies](#dependencies)
 
 #### ToolbarX <a name="toolbarx"></a>
 
@@ -433,32 +432,6 @@ val gson : Gson = GsonBuilder()
 var json="{\"some\": null, \"another\": \"test\"}"
 val obj=gson.fromJson(json, DemoJson::class.java) //obj.some="-"; obj.another="test"
 json=gson.toJson(obj) //json={"some": null, "another": "test"}
-```
-
-#### Library dependencies <a name="dependencies"></a>
-
-This library depends on the following libraries:
-
-```
-implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-implementation 'androidx.appcompat:appcompat:1.1.0-alpha04'
-implementation 'com.google.android.material:material:1.1.0-alpha05'
-implementation 'androidx.recyclerview:recyclerview:1.1.0-alpha04'
-implementation 'com.balysv.materialmenu:material-menu:2.0.0'
-implementation 'com.squareup.okhttp3:okhttp:3.12.0'
-implementation 'net.danlew:android.joda:2.10.1.2'
-implementation 'com.google.code.gson:gson:2.8.5'
-```
-
-You can exclude any of those:
-
-```
-implementation ('ro.andob.dobdroid:miscutils:1.2.4') {
-    exclude group: 'com.android.support'
-    exclude group: 'com.balysv.materialmenu'
-    exclude group: 'com.squareup.okhttp3'
-    exclude group: 'joda-time'
-}
 ```
 
 ### License

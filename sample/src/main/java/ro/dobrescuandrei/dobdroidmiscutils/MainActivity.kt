@@ -3,6 +3,7 @@ package ro.dobrescuandrei.dobdroidmiscutils
 import android.Manifest
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -55,9 +56,9 @@ class MainActivity : AppCompatActivity()
             .onDenied { Log.e("a", "NAY") }
             .withContext(context = this)
 
-        Handler().postDelayed({
+        Handler(Looper.getMainLooper()).postDelayed({
             Keyboard.open(on = this)
-            Handler().postDelayed({
+            Handler(Looper.getMainLooper()).postDelayed({
                 Keyboard.close(on = this)
             }, 1000)
         }, 1000)
@@ -84,7 +85,7 @@ class MainActivity : AppCompatActivity()
         return super.onCreateOptionsMenu(menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?) : Boolean
+    override fun onOptionsItemSelected(item: MenuItem) : Boolean
     {
         toolbar.onOptionsItemSelected(item)
         return super.onOptionsItemSelected(item)
