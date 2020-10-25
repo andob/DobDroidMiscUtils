@@ -47,10 +47,6 @@ class MainActivity : AppCompatActivity()
 
         ScreenSize.init(withContext = this)
 
-        if (ScreenSize.width<ScreenSize.height)
-            if (ScreenSize.density>=2.0)
-                Log.e("a", "a")
-
         permissionsHandler.askFor(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE))
             .onGranted { Log.e("a", "YAY") }
             .onDenied { Log.e("a", "NAY") }

@@ -1,7 +1,6 @@
 package ro.dobrescuandrei.utils
 
 import android.content.Context
-import android.content.res.Resources
 import android.view.View
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -50,9 +49,6 @@ object Colors
 
 fun Context.getKolor(colorResourceId : Int) : Color =
     Color(ContextCompat.getColor(this, colorResourceId))
-
-fun Resources.getKolor(colorResourceId : Int) : Color =
-    Color(getColor(colorResourceId))
 
 fun View.setBackgroundKolor(color : Color) =
     setBackgroundColor(color.value)

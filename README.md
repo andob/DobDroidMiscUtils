@@ -13,7 +13,7 @@ allprojects {
 ```
 ```
 dependencies {
-    implementation 'ro.andob.dobdroid:miscutils:1.2.5'
+    implementation 'ro.andob.dobdroid:miscutils:1.2.6'
 }
 ```
 
