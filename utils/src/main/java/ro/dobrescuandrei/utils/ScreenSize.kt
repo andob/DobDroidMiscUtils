@@ -21,12 +21,14 @@ object ScreenSize
             width=windowMetrics.bounds.width()-insets.left-insets.right
             height=windowMetrics.bounds.height()-insets.top-insets.bottom
         }
-
-        val windowManager=withContext.getSystemService(Context.WINDOW_SERVICE) as WindowManager
-        val display=windowManager.defaultDisplay!!
-        val size=Point()
-        display.getSize(size)
-        width=size.x
-        height=size.y
+        else
+        {
+            val windowManager=withContext.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+            val display=windowManager.defaultDisplay!!
+            val size=Point()
+            display.getSize(size)
+            width=size.x
+            height=size.y
+        }
     }
 }
