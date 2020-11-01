@@ -8,8 +8,9 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.inputmethod.EditorInfo
+import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_main.*
+import androidx.appcompat.widget.Toolbar
 import ro.dobrescuandrei.utils.*
 import java.io.File
 
@@ -30,6 +31,9 @@ class MainActivity : AppCompatActivity()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val toolbar=findViewById<Toolbar>(R.id.toolbar)!!
+        val editText=findViewById<EditText>(R.id.editText)!!
+
         setSupportActionBar(toolbar)
         toolbar.title="Title"
         toolbar.subtitle="Subtitle"
@@ -45,7 +49,7 @@ class MainActivity : AppCompatActivity()
             Log.e("a", "toggle drawer")
         }
 
-        ScreenSize.init(withContext = this)
+        ScreenSize.init(context = this)
 
         permissionsHandler.askFor(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE))
             .onGranted { Log.e("a", "YAY") }
@@ -77,12 +81,14 @@ class MainActivity : AppCompatActivity()
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean
     {
+        val toolbar=findViewById<Toolbar>(R.id.toolbar)!!
         toolbar.onCreateOptionsMenu(menuInflater, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem) : Boolean
     {
+        val toolbar=findViewById<Toolbar>(R.id.toolbar)!!
         toolbar.onOptionsItemSelected(item)
         return super.onOptionsItemSelected(item)
     }
